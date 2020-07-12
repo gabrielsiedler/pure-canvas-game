@@ -8,7 +8,7 @@ export const drawBall = (ctx: any, slotX: number, slotY: number, color: string) 
   ctx.closePath()
 }
 
-export const drawFlask = (ctx: any, index: number) => {
+export const drawFlask = (ctx: any, flask: any, index: number) => {
   const gap = flaskWidth * 2
   const x = containerGap + index * gap
   const y = containerGap + ballContainer
