@@ -1,7 +1,6 @@
 html {
   display: flex;
   min-width: fit-content;
-  min-height: -webkit-fill-available;
 }
 
 body {
@@ -14,10 +13,12 @@ body {
   position: relative;
   font-family: 'Roboto', sans-serif;
   color: #7f7f7f;
+  padding: 20px;
 }
 
 canvas {
   border: 2px solid #7f7f7f;
+  user-select: none;
 }
 
 .landscape-warning {
@@ -42,6 +43,17 @@ h1 {
   margin-bottom: 30px;
   font-size: 35px;
   letter-spacing: 0.2px;
+}
+
+@media screen and (max-width: 580px) and (orientation: landscape) {
+  h1 {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+}
+
+.canvas-container {
+  user-select: none;
 }
 
 .canvas-buttons {

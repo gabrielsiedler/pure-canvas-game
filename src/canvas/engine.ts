@@ -1,4 +1,4 @@
-import { ballContainer, ballCount, flaskWidth, flaskHeight } from '../definitions'
+import { ballContainer, ballCount, containerGap, flaskWidth, flaskHeight } from '../definitions'
 import { clearCanvas, drawBall, drawFlask } from './draw'
 import { levels } from '../levels'
 
@@ -15,7 +15,9 @@ interface flask {
   balls: string[]
 }
 
-const flasks: flask[] = levels[1]
+const flasks: flask[] = levels[2]
+
+canvas.width = (2 * containerGap + flasks.length * flaskWidth) * 2
 
 interface selected {
   flask?: number
