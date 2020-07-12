@@ -1,0 +1,14 @@
+{
+  "name": "ball",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gabriel Siedler <gabrielsiedler@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "dependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^3.9.6"
+  }
+}
