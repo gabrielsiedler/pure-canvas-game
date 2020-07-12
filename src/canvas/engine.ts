@@ -1,5 +1,6 @@
 import { ballContainer, ballCount, flaskWidth, flaskHeight } from '../definitions'
 import { clearCanvas, drawBall, drawFlask } from './draw'
+import { levels } from '../levels'
 
 const canvas = <HTMLCanvasElement>document.getElementById('gameScreen')
 let ctx = canvas.getContext('2d')
@@ -14,13 +15,7 @@ interface flask {
   balls: string[]
 }
 
-const flasks: flask[] = [
-  { pos: {}, balls: ['blue', 'orange', 'red', 'blue'] },
-  { pos: {}, balls: ['orange', 'orange', 'red', 'blue'] },
-  { pos: {}, balls: ['red', 'blue', 'orange', 'red'] },
-  { pos: {}, balls: [] },
-  { pos: {}, balls: [] },
-]
+const flasks: flask[] = levels[1]
 
 interface selected {
   flask?: number
@@ -32,6 +27,7 @@ const selected: selected = {
   color: null,
 }
 
+let moves = 0
 const getSlots = (x: number, y: number) => {
   const slots = []
 
@@ -78,11 +74,50 @@ const draw = () => {
       drawBall(ctx, slotX, slotY, ball)
     })
   })
+
+  if (hasMoved) {
+    checkGameState()
+    hasMoved = false
+  }
 }
 
+const checkGameState = () => {
+  const completed = flasks.every((flask) => {
+    const ballsLength = flask.balls.length
+
+    if (ballsLength > 0 && ballsLength < ballCount) return false
+    if (!ballsLength) return true
+
+    let flaskBallColor: string
+    return flask.balls.every((ball) => {
+      if (!flaskBallColor) {
+        flaskBallColor = ball
+
+        return true
+      }
+
+      return flaskBallColor === ball
+    })
+  })
+
+  if (completed) {
+    finished = true
+    alert(`Nice! You finished with ${moves} moves.`)
+  }
+}
+
+let finished = false
+let hasMoved = false
 const moveTo = (targetFlask: flask) => {
   flasks[selected.flask].balls.pop()
   targetFlask.balls.push(selected.color)
+
+  hasMoved = true
+  moves += 1
+
+  const movesText = moves === 1 ? `1 move` : `${moves} moves`
+  const countElement = document.getElementById('count')
+  countElement.innerText = String(movesText)
 }
 
 const tryToMoveTo = (target: number) => {
@@ -102,7 +137,15 @@ const tryToMoveTo = (target: number) => {
   return false
 }
 
+document.getElementById('reset').onclick = () => {
+  if (window.confirm('Are you sure you want to reset the game?')) {
+    document.location.reload()
+  }
+}
+
 document.getElementById('gameScreen').onclick = (event: any) => {
+  if (finished) return
+
   var clickX = event.layerX
   var clickY = event.layerY
 
