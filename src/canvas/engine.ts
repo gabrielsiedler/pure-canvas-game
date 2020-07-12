@@ -1,6 +1,7 @@
 import { ballContainer, ballCount, containerGap, flaskWidth, flaskHeight } from '../definitions'
 import { clearCanvas, drawBall, drawFlask } from './draw'
-import { levels } from '../levels'
+import { getNextLevel } from '../levels'
+import { level } from '~levels/1'
 
 const canvas = <HTMLCanvasElement>document.getElementById('gameScreen')
 let ctx = canvas.getContext('2d')
@@ -15,9 +16,7 @@ interface flask {
   balls: string[]
 }
 
-const flasks: flask[] = levels[2]
-
-canvas.width = (2 * containerGap + flasks.length * flaskWidth) * 2
+let flasks: flask[]
 
 interface selected {
   flask?: number
@@ -105,6 +104,8 @@ const checkGameState = () => {
   if (completed) {
     finished = true
     alert(`Nice! You finished with ${moves} moves.`)
+
+    toNextLevel()
   }
 }
 
@@ -145,6 +146,10 @@ document.getElementById('reset').onclick = () => {
   }
 }
 
+document.getElementById('test').onclick = () => {
+  toNextLevel()
+}
+
 document.getElementById('gameScreen').onclick = (event: any) => {
   if (finished) return
 
@@ -183,6 +188,29 @@ document.getElementById('gameScreen').onclick = (event: any) => {
   selected.color = flasks[sel].balls[lastBallInFlask]
 }
 
-export const start = () => {
+const toNextLevel = () => {
+  if (currentLevel === 6) {
+    alert('nice! you beat all levels.')
+
+    return
+  }
+
+  const newHash = getNextLevel(currentLevelHash, flasks)
+
+  var params = [`level=${newHash}`]
+
+  window.location.href = 'http://' + window.location.host + window.location.pathname + '?' + params.join('&')
+}
+
+let currentLevelHash: string
+let currentLevel: number
+export const start = (level: any, levelHash: string) => {
+  flasks = level.level
+  currentLevelHash = levelHash
+  currentLevel = level.number
+
+  document.getElementById('currentLevel').innerText = String(currentLevel)
+  canvas.width = (2 * containerGap + flasks.length * flaskWidth) * 2
+
   const gameInterval = setInterval(draw, 10)
 }
