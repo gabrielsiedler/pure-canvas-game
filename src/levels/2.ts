@@ -1,7 +1,9 @@
 export const level = [
-  { pos: {}, balls: ['blue', 'orange', 'red', 'blue'] },
-  { pos: {}, balls: ['orange', 'orange', 'red', 'blue'] },
-  { pos: {}, balls: ['red', 'blue', 'orange', 'red'] },
+  { pos: {}, balls: ['red', 'lightgreen', 'lightgreen', 'lightgreen'] },
+  { pos: {}, balls: ['orange', 'red', 'pink', 'lightgreen'] },
+  { pos: {}, balls: ['pink', 'orange', 'red', 'orange'] },
+  { pos: {}, balls: ['blue', 'pink', 'orange', 'pink'] },
+  { pos: {}, balls: ['blue', 'blue', 'blue', 'red'] },
   { pos: {}, balls: [] },
   { pos: {}, balls: [] },
 ]

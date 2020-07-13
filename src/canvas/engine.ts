@@ -146,10 +146,6 @@ document.getElementById('reset').onclick = () => {
   }
 }
 
-document.getElementById('test').onclick = () => {
-  toNextLevel()
-}
-
 document.getElementById('gameScreen').onclick = (event: any) => {
   if (finished) return
 
@@ -190,7 +186,7 @@ document.getElementById('gameScreen').onclick = (event: any) => {
 
 const toNextLevel = () => {
   if (currentLevel === 6) {
-    alert('nice! you beat all levels.')
+    alert('Done! You have beaten all levels.')
 
     return
   }
@@ -209,7 +205,7 @@ export const start = (level: any, levelHash: string) => {
   currentLevelHash = levelHash
   currentLevel = level.number
 
-  document.getElementById('currentLevel').innerText = String(currentLevel)
+  document.getElementById('currentLevel').innerText = `${String(currentLevel)} / 6`
   canvas.width = (2 * containerGap + flasks.length * flaskWidth) * 2
 
   const gameInterval = setInterval(draw, 10)
